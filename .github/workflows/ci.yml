@@ -46,10 +46,10 @@ jobs:
         uses: actions/setup-go@v3
 
       - name: Run tests
-        run: go test ./...
+        run: go test -v ./...
 
       - name: Deploy to Staging
-        if: github.ref == 'refs/heads/staging'
+        if: ${{ github.ref == 'refs/heads/staging' }}
         run: ./deploy_staging.sh
 
       # - name: Deploy to Production
