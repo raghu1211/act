@@ -14,10 +14,10 @@ jobs:
 
     # steps:
     #   - name: Checkout code
-    #     uses: actions/checkout@v3
+    #     uses: actions/checkout@v2
 
     #   - name: Set up Go
-    #     uses: actions/setup-go@v3
+    #     uses: actions/setup-go@v2
     #     with:
     #       go-version: '1.21'
 
@@ -31,7 +31,7 @@ jobs:
     #     run: make install
 
     #   - name: Upload build artifacts
-    #     uses: actions/upload-artifact@v3
+    #     uses: actions/upload-artifact@v2
     #     with:
     #       name: build-artifacts
     #       path: |
@@ -40,13 +40,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v2
 
       - name: Run tests
-        run: go test ./... $(ACT)
+        run: go test ./...
 
       - name: Deploy to Staging
         if: ${{ github.ref == 'refs/heads/staging' }}
