@@ -12,45 +12,45 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # steps:
-    #   - name: Checkout code
-    #     uses: actions/checkout@v2
-
-    #   - name: Set up Go
-    #     uses: actions/setup-go@v2
-    #     with:
-    #       go-version: '1.21'
-
-    #   - name: Install dependencies
-    #     run: go mod download
-
-    #   # - name: Run tests
-    #   #   run: make test
-
-    #   - name: Build the project
-    #     run: make install
-
-    #   - name: Upload build artifacts
-    #     uses: actions/upload-artifact@v2
-    #     with:
-    #       name: build-artifacts
-    #       path: |
-    #         bin/**
-    #         !**/node_modules/**
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Go
         uses: actions/setup-go@v2
+        with:
+          go-version: '1.21'
 
-      - name: Run tests
-        run: go test ./...
+      - name: Install dependencies
+        run: go mod download
 
-      - name: Deploy to Staging
-        if: ${{ github.ref == 'refs/heads/staging' }}
-        run: ./deploy_staging.sh
+      # - name: Run tests
+      #   run: make test
+
+      - name: Build the project
+        run: make install
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: |
+            bin/**
+            !**/node_modules/**
+
+    # steps:
+    #   - name: Checkout code
+    #     uses: actions/checkout@v2
+
+    #   - name: Set up Go
+    #     uses: actions/setup-go@v2
+
+    #   - name: Run tests
+    #     run: go test ./...
+
+    #   - name: Deploy to Staging
+    #     if: ${{ github.ref == 'refs/heads/staging' }}
+    #     run: ./deploy_staging.sh
 
       # - name: Deploy to Production
       #   if: github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message, 'release:')
