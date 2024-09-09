@@ -9,34 +9,63 @@ on:
       - main
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Go Linter
+        run: make lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: make test
+
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Build Application
+        run: make build
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '1.21'
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Security Scan
+        run: docker run --rm -v $(pwd):/project aquasec/trivy fs /project
 
-      - name: Install dependencies
-        run: go mod download
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-      # - name: Run tests
-      #   run: make test
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      - name: Build the project
-        run: make install
+#       - name: Set up Go
+#         uses: actions/setup-go@v2
+#         with:
+#           go-version: '1.21'
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-artifacts
-          path: |
-            bin/**
-            !**/node_modules/**
+#       - name: Install dependencies
+#         run: go mod download
+
+#       # - name: Run tests
+#       #   run: make test
+
+#       - name: Build the project
+#         run: make install
+
+#       - name: Upload build artifacts
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: build-artifacts
+#           path: |
+#             bin/**
+#             !**/node_modules/**
 
     # steps:
     #   - name: Checkout code
