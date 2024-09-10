@@ -37,7 +37,7 @@ format-all:
 .PHONY: test
 test:
 	go test ./...
-	$(ACT)
+	
 
 .PHONY: lint-go
 lint-go:
