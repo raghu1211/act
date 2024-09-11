@@ -20,7 +20,10 @@ jobs:
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
-          trivy fs . --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --scanners vuln
+
+      - name: Run Trivy vulnerability scan
+        run: |
+          ./trivy fs . --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --scanners vuln
   
   
   dependabot-check:
