@@ -21,7 +21,7 @@ jobs:
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
           echo "Adding Trivy to PATH"
-          sudo mv trivy /usr/local/bin/
+          sudo mv Trivy /usr/local/bin/
 
       - name: Run Trivy vulnerability scan
         run: |
