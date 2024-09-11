@@ -21,7 +21,7 @@ jobs:
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
           echo "Moving Trivy to /usr/local/bin/"
-          sudo mv trivy /usr/local/bin/trivy
+          sudo mv ./bin/trivy /usr/local/bin/trivy
 
       - name: Confirm Trivy installation
         run: |
