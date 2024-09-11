@@ -20,13 +20,17 @@ jobs:
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+          echo "Adding Trivy to PATH"
+          sudo mv trivy /usr/local/bin/
 
       - name: Run Trivy vulnerability scan
         run: |
-          ./trivy fs . --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --scanners vuln
-
+          trivy fs . --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --scanners vuln
+  
+  
   dependabot-check:
     name: Dependency Updates
+    needs: trivy-scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
