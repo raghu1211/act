@@ -16,16 +16,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Install Trivy
         run: |
-          sudo apt-get update
-          sudo apt-get install -y trivy
-      
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+
       - name: Run Trivy vulnerability scan
         run: |
-          trivy fs . --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --scanners vuln
-  
+          ./trivy fs . --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --scanners vuln
+
   dependabot-check:
     name: Dependency Updates
     runs-on: ubuntu-latest
