@@ -1,0 +1,38 @@
+name: Security Scan
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'  
+  pull_request:
+    branches:
+      - actin_test
+  workflow_dispatch: {}
+
+jobs:
+  trivy-scan:
+    name: Trivy Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y trivy
+      
+      - name: Run Trivy vulnerability scan
+        run: |
+          trivy fs . --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --scanners vuln
+  
+  dependabot-check:
+    name: Dependency Updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependabot Alerts
+        uses: advanced-security/dependabot-alerts-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
